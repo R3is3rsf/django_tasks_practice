@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="name" class="form-label">New project</label>
+      <input type="text" class="form-control" id="name" name="name" required placeholder="Ingrese el nombre del nuevo proyecto">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+{% endblock %} 

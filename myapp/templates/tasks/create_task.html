@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+<h1 class="text-primary">Create new task</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="title" class="form-label">New task</label>
+      <input type="text" class="form-control" id="title" name="title" required placeholder="Ingrese el titulo de la tarea">
+    </div>
+    <div>
+        <label for="description">Descripcion</label>
+        <textarea class="form-control" placeholder="description" name="description" id="description"></textarea>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+{% endblock %}
