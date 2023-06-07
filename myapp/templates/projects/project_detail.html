@@ -1,14 +1,24 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <h1>{{project.name}}</h1>
-
+    <a class="btn btn-info mb-4" href="{% url 'projects' %}">Return all projects</a>
+    <h1 class="text-primary">Project: {{project.name}}</h1>
+    {% if not tasks %}
+    <h2 class="text-warning mt-4">This project not have tasks</h2>
+    {% else %}
+    <h2 class="text-primary">Tasks list:</h2>
     {% for task in tasks %}
-        <div class="card">
-            <p>{{task.title}}</p>
-            <p>{{task.description}}</p>
-        </div>
+    <article  class="card my-4" style="width: 18rem;">
+        <h3 class="card-title">{%if task.done == False%} &#9201; {% else %}&#10004; {% endif %} {{task.title}}</h3>
+         <div class="card-body">
+             <p>{{task.description}}</p>
+             <p>{{task.project}}</p>
+             <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+             <a href="{% url 'update_task_form' task.id %}" class="btn btn-warning">Update</a>
+         </div>      
+    </article> 
     {% endfor %}
+    {% endif %}
 
 {% endblock %}
     

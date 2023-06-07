@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
 from .models import Project, Task
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -54,7 +53,47 @@ def create_task(request):
 
     if request.method == 'POST':
         Task.objects.create(
-            title=request.POST['title'], description=request.POST['description'], project_id=1)
+            title=request.POST['title'], description=request.POST['description'], project_id=request.POST['project'])
         return redirect('tasks')
     else:
-        return render(request, 'tasks/create_task.html')
+        project = Project.objects.all()
+        return render(request, 'tasks/create_task.html',{
+            'projects':project
+        })
+    
+def update_task_form(request,id):
+    projects = Project.objects.all()
+    task = Task.objects.get(id=id)
+    return render(request,'tasks/update_task_form.html', {
+        'task':task,
+        'projects': projects
+    })    
+    
+def update_task(request):
+
+    if request.method == 'POST':
+        id = request.POST['id']
+        title = request.POST['title']
+        description = request.POST['description']
+        project = request.POST['project']
+
+        task = Task.objects.get(id=id)
+        task.title = title
+        task.description = description
+        task.project_id = project
+
+        task.save()
+
+    tasks = Task.objects.all()
+    return render(request, 'tasks/tasks.html', {
+        'tasks': tasks
+    })
+    
+def delete_task(request,id):
+    
+    instance = Task.objects.get(id=id)
+    instance.delete()
+    tasks = Task.objects.all()
+    return render(request, 'tasks/tasks.html', {
+        'tasks': tasks
+    })

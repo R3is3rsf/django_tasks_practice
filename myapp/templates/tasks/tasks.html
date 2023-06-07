@@ -2,17 +2,22 @@
 
 {% block content %}
 
-<h1>Tasks:</h1>
 
 {%  for task in tasks  %}
 
-    <article>
-        <h3>{%if task.done == False%} &#9201; {% else %}&#10004; {% endif %} {{task.title}}</h3>
+<div class="container d-flex flex-column align-items-center">
+      <h1 class="text-primary">Tasks:</h1>
 
-        <p>{{task.description}}</p>
-        <p>{{task.project}}</p>
-
-    </article>    
+      <article  class="card my-4" style="width: 18rem;">
+          <h3 class="card-title">{%if task.done == False%} &#9201; {% else %}&#10004; {% endif %} {{task.title}}</h3>
+           <div class="card-body">
+               <p>{{task.description}}</p>
+               <p>{{task.project}}</p>
+               <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+               <a href="{% url 'update_task_form' task.id %}" class="btn btn-warning">Update</a>
+           </div>      
+      </article>    
+  </div>  
 
 {% endfor %}
 

@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+<h1 class="text-primary">Update task</h1>
+
+<form method="POST" action="{% url 'update_task'  %}">
+    {% csrf_token %}
+
+    <input type="hidden" id="id" name="id" value="{{task.id}}">
+
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" required placeholder="Ingrese el titulo de la tarea" value="{{task.title}}">
+    </div>
+    <div class="mb-3">
+        <label for="description mb-3">Descripcion</label>
+        <textarea class="form-control" placeholder="description" name="description" id="description" >{{task.description}}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="project">Select project</label>
+        <select class="form-select" name="project" id="project">
+          <option selected value="{{task.project.id}}">{{task.project}}</option>
+
+          {% for project in projects %}
+            {% if project.id != task.project.id %}
+            <option value="{{project.id}}">{{project.name}}</option>
+            {% endif %}
+          {% endfor %} 
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  </form>
+
+
+{% endblock %}

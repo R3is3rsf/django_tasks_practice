@@ -2,15 +2,19 @@
 
 {% block content %}
 
+<div class="container">
+  <h1 class="text-primary">Create new Project</h1>
+
   <form method="POST">
     {% csrf_token %}
 
     <div class="mb-3">
-      <label for="name" class="form-label">New project</label>
+      <label for="name" class="form-label">Name project</label>
       <input type="text" class="form-control" id="name" name="name" required placeholder="Ingrese el nombre del nuevo proyecto">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+</div>
 
 {% endblock %} 
