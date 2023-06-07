@@ -41,6 +41,35 @@ def project_detail(request,id):
             'tasks':tasks
         })
 
+def delete_project(request,id):
+    
+    instance = Project.objects.get(id=id)
+    instance.delete()
+    projects = Project.objects.all()
+    return render(request, 'projects/projects.html', {
+        'projects': projects
+    })
+
+def update_project_form(request,id):
+    project = Project.objects.get(id=id)
+    return render(request,'projects/update_project_form.html', {
+        'project': project
+    })    
+    
+def update_project(request):
+
+    if request.method == 'POST':
+        id = request.POST['id']
+        name = request.POST['name']
+        project = Project.objects.get(id=id)
+        project.name = name
+        project.save()
+
+    projects = Project.objects.all()
+    return render(request, 'projects/projects.html', {
+        'projects': projects
+    })
+
  
 def tasks(request):
     tasks = Task.objects.all()
